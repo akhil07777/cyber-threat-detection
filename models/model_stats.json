@@ -1,0 +1,110 @@
+{
+    "best_model": "LightGBM",
+    "model_metrics": [
+        {
+            "Model": "RandomForest",
+            "Accuracy": 0.7500887154009936,
+            "Precision": 0.8177251132045831,
+            "Recall": 0.7500887154009936,
+            "F1_Weighted": 0.7088691903739858,
+            "F1_Macro": 0.5045628864214268,
+            "ROC_AUC_Macro": 0.9062552208784288
+        },
+        {
+            "Model": "XGBoost",
+            "Accuracy": 0.7602022711142654,
+            "Precision": 0.8114693563444655,
+            "Recall": 0.7602022711142654,
+            "F1_Weighted": 0.7149180470396121,
+            "F1_Macro": 0.5384899558775114,
+            "ROC_AUC_Macro": 0.9442248605728765
+        },
+        {
+            "Model": "LightGBM",
+            "Accuracy": 0.7564318665720369,
+            "Precision": 0.7545589863522956,
+            "Recall": 0.7564318665720369,
+            "F1_Weighted": 0.7183862723507503,
+            "F1_Macro": 0.5053191469417107,
+            "ROC_AUC_Macro": 0.7806464870127415
+        },
+        {
+            "Model": "GradientBoosting",
+            "Accuracy": 0.7524396735273243,
+            "Precision": 0.8054965627427062,
+            "Recall": 0.7524396735273243,
+            "F1_Weighted": 0.7077862041652843,
+            "F1_Macro": 0.5531574550317548,
+            "ROC_AUC_Macro": 0.8709202245193038
+        }
+    ],
+    "feature_importances": [
+        {
+            "Feature": "src_bytes",
+            "Importance": 0.15037844263714442
+        },
+        {
+            "Feature": "same_srv_rate",
+            "Importance": 0.08366033827503987
+        },
+        {
+            "Feature": "flag",
+            "Importance": 0.07356035837299012
+        },
+        {
+            "Feature": "dst_host_serror_rate",
+            "Importance": 0.06944152064048367
+        },
+        {
+            "Feature": "count",
+            "Importance": 0.05728896997041786
+        },
+        {
+            "Feature": "dst_bytes",
+            "Importance": 0.05320587248104765
+        },
+        {
+            "Feature": "srv_serror_rate",
+            "Importance": 0.049870890731984696
+        },
+        {
+            "Feature": "diff_srv_rate",
+            "Importance": 0.04720287913091508
+        },
+        {
+            "Feature": "dst_host_same_srv_rate",
+            "Importance": 0.039780128168056705
+        },
+        {
+            "Feature": "dst_host_same_src_port_rate",
+            "Importance": 0.03810683706768511
+        },
+        {
+            "Feature": "serror_rate",
+            "Importance": 0.037954033521763735
+        },
+        {
+            "Feature": "dst_host_diff_srv_rate",
+            "Importance": 0.035914844967253896
+        },
+        {
+            "Feature": "protocol_type",
+            "Importance": 0.03346881907350349
+        },
+        {
+            "Feature": "dst_host_srv_count",
+            "Importance": 0.02908818035511649
+        },
+        {
+            "Feature": "srv_count",
+            "Importance": 0.026309498796691158
+        }
+    ],
+    "attack_counts": {
+        "Normal": 67343,
+        "DoS": 45927,
+        "Probe": 11656,
+        "R2L": 995,
+        "U2R": 52
+    }
+}
