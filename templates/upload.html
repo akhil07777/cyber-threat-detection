@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Data | AI Cybersecurity Threat Detection Platform{% endblock %}
+
+{% block content %}
+<div class="upload-page">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                <div>
+                    <h1 class="display-6 fw-bold mb-1">Upload Network Data</h1>
+                    <p class="text-muted mb-0">Upload CSV files for analysis and threat classification.</p>
+                </div>
+                <a href="/dashboard" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+                </a>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-12 col-lg-7">
+                            <div class="mb-4">
+                                <h2 class="h4 fw-bold mb-2">CSV Upload</h2>
+                                <p class="text-muted mb-0">Select a CSV file to run the detection workflow. Backend integration will be connected later.</p>
+                            </div>
+
+                            <form>
+                                <div class="mb-4">
+                                    <label for="csvFile" class="form-label">Choose CSV File</label>
+                                    <input class="form-control form-control-lg upload-input" type="file" id="csvFile" accept=".csv">
+                                </div>
+
+                                <div class="d-flex flex-column flex-sm-row gap-3 align-items-sm-center">
+                                    <button type="button" class="btn btn-primary btn-lg upload-btn">
+                                        <i class="bi bi-cloud-arrow-up me-2"></i>Upload File
+                                    </button>
+                                    <div class="text-muted small">
+                                        Supported format: <span class="fw-semibold">.csv</span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-12 col-lg-5">
+                            <div class="upload-hero rounded-4 p-4 h-100 d-flex flex-column justify-content-center">
+                                <div class="text-center">
+                                    <div class="upload-illustration mx-auto mb-3">
+                                        <i class="bi bi-file-earmark-arrow-up-fill"></i>
+                                    </div>
+                                    <h3 class="h5 fw-bold text-white mb-2">Ready for Analysis</h3>
+                                    <p class="text-white-50 mb-0">Upload a dataset to preview detection results and threat summaries.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h2 class="h5 fw-bold mb-1">Upload Progress</h2>
+                            <p class="text-muted small mb-0">Progress bar placeholder for future upload feedback</p>
+                        </div>
+                        <span class="badge text-bg-primary-subtle text-primary rounded-pill">Waiting</span>
+                    </div>
+                    <div class="progress upload-progress" role="progressbar" aria-label="Upload progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+                        <div>
+                            <h2 class="h5 fw-bold mb-1">Analysis Result</h2>
+                            <p class="text-muted small mb-0">Summary of predicted traffic categories</p>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary btn-sm">Reset</button>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-6 col-md-4 col-xl-2">
+                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body text-center py-4">
+                                    <p class="text-muted small mb-2">Normal</p>
+                                    <h3 class="display-6 fw-bold mb-0 text-success">245</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-2">
+                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body text-center py-4">
+                                    <p class="text-muted small mb-2">DoS</p>
+                                    <h3 class="display-6 fw-bold mb-0 text-danger">18</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-2">
+                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body text-center py-4">
+                                    <p class="text-muted small mb-2">Probe</p>
+                                    <h3 class="display-6 fw-bold mb-0 text-warning">12</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-2">
+                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body text-center py-4">
+                                    <p class="text-muted small mb-2">R2L</p>
+                                    <h3 class="display-6 fw-bold mb-0 text-primary">7</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-2">
+                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body text-center py-4">
+                                    <p class="text-muted small mb-2">U2R</p>
+                                    <h3 class="display-6 fw-bold mb-0 text-secondary">3</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-xl-2">
+                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body text-center py-4">
+                                    <p class="text-muted small mb-2">Total</p>
+                                    <h3 class="display-6 fw-bold mb-0 text-primary">285</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table align-middle upload-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Record ID</th>
+                                    <th>Prediction</th>
+                                    <th>Confidence</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Normal</td>
+                                    <td>99.1%</td>
+                                    <td><span class="badge bg-success-subtle text-success">Safe</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>DoS</td>
+                                    <td>94.8%</td>
+                                    <td><span class="badge bg-danger-subtle text-danger">Threat</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Probe</td>
+                                    <td>91.2%</td>
+                                    <td><span class="badge bg-warning-subtle text-warning">Review</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>R2L</td>
+                                    <td>88.5%</td>
+                                    <td><span class="badge bg-primary-subtle text-primary">Flagged</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
