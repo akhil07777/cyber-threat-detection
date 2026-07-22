@@ -1,24 +1,63 @@
 import joblib
+import pandas as pd
 
-model = joblib.load(
-    "ml/model.pkl"
-)
+# Load trained model
+model = joblib.load("ml/model.pkl")
 
-def predict_attack(
-        duration,
-        src_bytes,
-        dst_bytes
-):
+# Load encoders
+encoders = joblib.load("ml/encoders.pkl")
 
-    result = model.predict(
-        [[
-            duration,
-            src_bytes,
-            dst_bytes
-        ]]
-    )
 
-    if result[0] == 0:
-        return "Normal"
+def predict_attack(row):
 
-    return "Attack"
+    # Make a copy
+    data = row.copy()
+
+    # Encode categorical features
+    categorical_columns = [
+        "protocol_type",
+        "service",
+        "flag"
+    ]
+
+    for column in categorical_columns:
+
+        if data[column] in encoders[column].classes_:
+            data[column] = encoders[column].transform([data[column]])[0]
+        else:
+            # Unknown category
+            data[column] = 0
+
+    # Convert to DataFrame
+    sample = pd.DataFrame([data])
+
+    # Prediction
+    prediction = model.predict(sample)[0]
+
+    # Confidence
+    probabilities = model.predict_proba(sample)[0]
+    confidence = round(max(probabilities) * 100, 2)
+
+    if prediction == 0:
+
+        prediction_text = "Normal"
+        risk = "Low"
+
+    else:
+
+        prediction_text = "Attack"
+
+        if confidence >= 95:
+            risk = "Critical"
+        elif confidence >= 85:
+            risk = "High"
+        elif confidence >= 70:
+            risk = "Medium"
+        else:
+            risk = "Low"
+
+    return {
+        "prediction": prediction_text,
+        "confidence": confidence,
+        "risk": risk
+    }

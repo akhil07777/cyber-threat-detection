@@ -7,3 +7,5 @@ client = MongoClient(MONGO_URI)
 db = client["cyber_threat_db"]
 
 users_collection = db["users"]
+reports_collection = db["reports"]
+uploads_collection = db["uploads"]

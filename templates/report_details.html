@@ -1,0 +1,522 @@
+{% extends 'base.html' %}
+
+{% block title %}Report Details | AI Cyber Threat Detection{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="fw-bold">
+            AI Cyber Threat Report
+        </h2>
+
+        <a href="/reports" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left"></i>
+            Back to Reports
+        </a>
+
+    </div>
+
+
+    <!-- Upload Information -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+                Upload Information
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <p>
+                        <strong>Filename:</strong>
+                        {{ report.filename }}
+                    </p>
+
+                    <p>
+                        <strong>Upload Time:</strong>
+                        {{ report.upload_time }}
+                    </p>
+
+                    <p>
+                        <strong>Total Records:</strong>
+                        {{ report.total_records }}
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        <strong>Attack Records:</strong>
+
+                        <span class="badge bg-danger">
+                            {{ report.attack_count }}
+                        </span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Normal Records:</strong>
+
+                        <span class="badge bg-success">
+                            {{ report.normal_count }}
+                        </span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Status:</strong>
+
+                        <span class="badge bg-primary">
+                            {{ report.status }}
+                        </span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Prediction Details -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+
+                Prediction Details
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover table-bordered align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Protocol</th>
+                            <th>Service</th>
+                            <th>Prediction</th>
+                            <th>Confidence</th>
+                            <th>Risk</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% if predictions %}
+
+                        {% for item in predictions %}
+
+                        <tr>
+
+                            <td>{{ loop.index }}</td>
+
+                            <td>{{ item.protocol_type }}</td>
+
+                            <td>{{ item.service }}</td>
+
+                            <td>
+
+                                {% if item.prediction=="Attack" %}
+
+                                    <span class="badge bg-danger">
+                                        {{ item.prediction }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-success">
+                                        {{ item.prediction }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.confidence }}%
+
+                            </td>
+
+                            <td>
+
+                                {% if item.risk=="Critical" %}
+
+                                    <span class="badge bg-danger">
+
+                                        {{ item.risk }}
+
+                                    </span>
+
+                                {% elif item.risk=="High" %}
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        {{ item.risk }}
+
+                                    </span>
+
+                                {% elif item.risk=="Medium" %}
+
+                                    <span class="badge bg-info text-dark">
+
+                                        {{ item.risk }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-success">
+
+                                        {{ item.risk }}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                <button
+
+                                    class="btn btn-primary btn-sm"
+
+                                    data-bs-toggle="modal"
+
+                                    data-bs-target="#recordModal"
+
+                                    onclick='showRecord(
+
+                                    "{{ loop.index }}",
+
+                                    "{{ item.duration }}",
+
+                                    "{{ item.protocol_type }}",
+
+                                    "{{ item.service }}",
+
+                                    "{{ item.flag }}",
+
+                                    "{{ item.src_bytes }}",
+
+                                    "{{ item.dst_bytes }}",
+
+                                    "{{ item.logged_in }}",
+
+                                    "{{ item.count }}",
+
+                                    "{{ item.srv_count }}",
+
+                                    "{{ item.prediction }}",
+
+                                    "{{ item.confidence }}",
+
+                                    "{{ item.risk }}"
+
+                                    )'
+
+                                >
+
+                                    <i class="bi bi-eye-fill"></i>
+
+                                    View
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="7" class="text-center text-muted">
+
+                                No prediction records found.
+
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+<!-- Record Details Modal -->
+
+<div class="modal fade" id="recordModal" tabindex="-1" aria-labelledby="recordModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-dark text-white">
+
+                <h5 class="modal-title" id="recordModalLabel">
+
+                    <i class="bi bi-shield-lock-fill"></i>
+                    Network Traffic Record Details
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <table class="table table-bordered">
+
+                            <tr>
+                                <th width="45%">Record No.</th>
+                                <td id="m_record"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Duration</th>
+                                <td id="m_duration"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Protocol Type</th>
+                                <td id="m_protocol"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Service</th>
+                                <td id="m_service"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Flag</th>
+                                <td id="m_flag"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Logged In</th>
+                                <td id="m_login"></td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <table class="table table-bordered">
+
+                            <tr>
+                                <th width="45%">Source Bytes</th>
+                                <td id="m_src"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Destination Bytes</th>
+                                <td id="m_dst"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Count</th>
+                                <td id="m_count"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Service Count</th>
+                                <td id="m_srvcount"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Prediction</th>
+                                <td>
+                                    <span id="m_prediction"></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Confidence</th>
+                                <td>
+                                    <span id="m_confidence"></span> %
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Risk Level</th>
+                                <td>
+                                    <span id="m_risk"></span>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <h5 class="text-primary">
+                    AI Security Analysis
+                </h5>
+
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th width="35%">Threat Status</th>
+                        <td id="m_status"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Recommended Action</th>
+                        <td id="m_action"></td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+function showRecord(
+record,
+duration,
+protocol,
+service,
+flag,
+src,
+dst,
+login,
+count,
+srvcount,
+prediction,
+confidence,
+risk
+){
+
+    document.getElementById("m_record").innerHTML = record;
+    document.getElementById("m_duration").innerHTML = duration;
+    document.getElementById("m_protocol").innerHTML = protocol;
+    document.getElementById("m_service").innerHTML = service;
+    document.getElementById("m_flag").innerHTML = flag;
+    document.getElementById("m_src").innerHTML = src;
+    document.getElementById("m_dst").innerHTML = dst;
+    document.getElementById("m_login").innerHTML = login;
+    document.getElementById("m_count").innerHTML = count;
+    document.getElementById("m_srvcount").innerHTML = srvcount;
+    document.getElementById("m_prediction").innerHTML = prediction;
+    document.getElementById("m_confidence").innerHTML = confidence;
+    document.getElementById("m_risk").innerHTML = risk;
+
+    /* AI Analysis */
+
+    if(prediction=="Attack"){
+
+        document.getElementById("m_status").innerHTML =
+        "<span class='badge bg-danger'>Threat Detected</span>";
+
+        if(risk=="Critical"){
+
+            document.getElementById("m_action").innerHTML =
+            "🚨 Immediately isolate the host, block the source IP, inspect firewall logs and notify the administrator.";
+
+        }
+        else if(risk=="High"){
+
+            document.getElementById("m_action").innerHTML =
+            "⚠ Block suspicious traffic, monitor network activity and perform malware scanning.";
+
+        }
+        else{
+
+            document.getElementById("m_action").innerHTML =
+            "⚠ Monitor the connection and investigate unusual behaviour.";
+
+        }
+
+    }
+    else{
+
+        document.getElementById("m_status").innerHTML =
+        "<span class='badge bg-success'>Normal Traffic</span>";
+
+        document.getElementById("m_action").innerHTML =
+        "✅ No malicious activity detected. Continue normal monitoring.";
+
+    }
+
+}
+
+</script>
+
+</div>
+
+{% endblock %}

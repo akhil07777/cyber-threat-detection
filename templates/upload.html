@@ -25,14 +25,20 @@
                                 <p class="text-muted mb-0">Select a CSV file to run the detection workflow. Backend integration will be connected later.</p>
                             </div>
 
-                            <form>
+                            <form id="uploadForm" enctype="multipart/form-data">
                                 <div class="mb-4">
                                     <label for="csvFile" class="form-label">Choose CSV File</label>
-                                    <input class="form-control form-control-lg upload-input" type="file" id="csvFile" accept=".csv">
+                                    <input
+    class="form-control form-control-lg upload-input"
+    type="file"
+    id="csvFile"
+    name="file"
+    accept=".csv"
+    required>
                                 </div>
 
                                 <div class="d-flex flex-column flex-sm-row gap-3 align-items-sm-center">
-                                    <button type="button" class="btn btn-primary btn-lg upload-btn">
+                                    <button type="submit" class="btn btn-primary btn-lg upload-btn">
                                         <i class="bi bi-cloud-arrow-up me-2"></i>Upload File
                                     </button>
                                     <div class="text-muted small">
@@ -40,6 +46,9 @@
                                     </div>
                                 </div>
                             </form>
+                            <div id="uploadMessage" class="mt-3"></div>
+
+<div id="result" class="mt-4"></div>
                         </div>
 
                         <div class="col-12 col-lg-5">
@@ -64,10 +73,24 @@
                             <h2 class="h5 fw-bold mb-1">Upload Progress</h2>
                             <p class="text-muted small mb-0">Progress bar placeholder for future upload feedback</p>
                         </div>
-                        <span class="badge text-bg-primary-subtle text-primary rounded-pill">Waiting</span>
+                        <span id="uploadStatus">
+
+Waiting
+
+</span>
                     </div>
                     <div class="progress upload-progress" role="progressbar" aria-label="Upload progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 0%"></div>
+                        <div
+
+id="progressBar"
+
+class="progress-bar"
+
+style="width:0%">
+
+0%
+
+</div>
                     </div>
                 </div>
             </div>
@@ -77,98 +100,87 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
                         <div>
                             <h2 class="h5 fw-bold mb-1">Analysis Result</h2>
-                            <p class="text-muted small mb-0">Summary of predicted traffic categories</p>
+                            <p class="text-muted small mb-0">Prediction Results </p>
                         </div>
                         <button type="button" class="btn btn-outline-secondary btn-sm">Reset</button>
                     </div>
 
                     <div class="row g-3 mb-4">
-                        <div class="col-6 col-md-4 col-xl-2">
-                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
-                                <div class="card-body text-center py-4">
-                                    <p class="text-muted small mb-2">Normal</p>
-                                    <h3 class="display-6 fw-bold mb-0 text-success">245</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 col-xl-2">
-                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
-                                <div class="card-body text-center py-4">
-                                    <p class="text-muted small mb-2">DoS</p>
-                                    <h3 class="display-6 fw-bold mb-0 text-danger">18</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 col-xl-2">
-                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
-                                <div class="card-body text-center py-4">
-                                    <p class="text-muted small mb-2">Probe</p>
-                                    <h3 class="display-6 fw-bold mb-0 text-warning">12</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 col-xl-2">
-                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
-                                <div class="card-body text-center py-4">
-                                    <p class="text-muted small mb-2">R2L</p>
-                                    <h3 class="display-6 fw-bold mb-0 text-primary">7</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 col-xl-2">
-                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
-                                <div class="card-body text-center py-4">
-                                    <p class="text-muted small mb-2">U2R</p>
-                                    <h3 class="display-6 fw-bold mb-0 text-secondary">3</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 col-xl-2">
-                            <div class="summary-card card border-0 shadow-sm rounded-4 h-100">
-                                <div class="card-body text-center py-4">
-                                    <p class="text-muted small mb-2">Total</p>
-                                    <h3 class="display-6 fw-bold mb-0 text-primary">285</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h5>Total Records</h5>
+
+                <h2 id="totalRecords">0</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h5>Normal</h5>
+
+                <h2 class="text-success" id="normalCount">0</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h5>Attack</h5>
+
+                <h2 class="text-danger" id="attackCount">0</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
                     <div class="table-responsive">
                         <table class="table align-middle upload-table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Record ID</th>
-                                    <th>Prediction</th>
-                                    <th>Confidence</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Normal</td>
-                                    <td>99.1%</td>
-                                    <td><span class="badge bg-success-subtle text-success">Safe</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>DoS</td>
-                                    <td>94.8%</td>
-                                    <td><span class="badge bg-danger-subtle text-danger">Threat</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Probe</td>
-                                    <td>91.2%</td>
-                                    <td><span class="badge bg-warning-subtle text-warning">Review</span></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>R2L</td>
-                                    <td>88.5%</td>
-                                    <td><span class="badge bg-primary-subtle text-primary">Flagged</span></td>
-                                </tr>
-                            </tbody>
+                           <thead>
+
+<tr>
+
+<th>#</th>
+
+<th>Protocol</th>
+
+<th>Service</th>
+
+<th>Prediction</th>
+
+<th>Confidence</th>
+
+<th>Risk</th>
+
+</tr>
+
+</thead>
+                            <tbody id="predictionTable">
+
+</tbody>
                         </table>
                     </div>
                 </div>
@@ -176,4 +188,215 @@
         </div>
     </div>
 </div>
+<script>
+
+function processResult(data){
+
+    let normal = 0;
+    let attack = 0;
+    let table = "";
+
+    data.results.forEach(function(item,index){
+
+        if(item.prediction=="Normal")
+            normal++;
+        else
+            attack++;
+
+       table += `
+<tr>
+
+    <td>${index+1}</td>
+
+    <td>${item.protocol}</td>
+
+    <td>${item.service}</td>
+
+    <td>
+        <span class="badge ${item.prediction=="Normal" ? "bg-success":"bg-danger"}">
+            ${item.prediction}
+        </span>
+    </td>
+
+    <td>
+
+        <span class="badge bg-primary">
+
+            ${item.confidence}%
+
+        </span>
+
+    </td>
+
+    <td>
+
+        <span class="badge
+            ${
+                item.risk=="Critical"
+                ? "bg-danger"
+
+                : item.risk=="High"
+
+                ? "bg-warning text-dark"
+
+                : item.risk=="Medium"
+
+                ? "bg-info text-dark"
+
+                : "bg-success"
+            }">
+
+            ${item.risk}
+
+        </span>
+
+    </td>
+
+</tr>
+`;
+
+    });
+
+    document.getElementById("predictionTable").innerHTML = table;
+    document.getElementById("totalRecords").innerHTML = data.results.length;
+    document.getElementById("normalCount").innerHTML = normal;
+    document.getElementById("attackCount").innerHTML = attack;
+
+    document.getElementById("result").innerHTML = `
+    <div class="alert alert-success">
+        <strong>CSV uploaded successfully.</strong><br>
+        Total Records : ${data.results.length}<br>
+        Normal : ${normal}<br>
+        Attack : ${attack}
+    </div>`;
+}
+
+document.getElementById("uploadForm").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const file = document.getElementById("csvFile").files[0];
+
+    if(!file){
+
+        alert("Please select a CSV file.");
+
+        return;
+
+    }
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    document.getElementById("uploadStatus").innerHTML = "Uploading...";
+    document.getElementById("progressBar").style.width = "50%";
+    document.getElementById("progressBar").innerHTML = "50%";
+
+    try{
+
+        const response = await fetch("/upload-csv",{
+            method:"POST",
+            body:formData
+        });
+
+        const data = await response.json();
+
+        // Upload failed
+        if(!data.success){
+
+            document.getElementById("progressBar").style.width = "0%";
+            document.getElementById("progressBar").innerHTML = "0%";
+            document.getElementById("uploadStatus").innerHTML = "Failed";
+
+            // Duplicate file
+            if(data.duplicate){
+
+                const replace = confirm(
+                    "This file has already been uploaded.\n\nDo you want to replace the previous analysis?"
+                );
+
+                if(replace){
+
+                    const replaceForm = new FormData();
+
+                    replaceForm.append("file", file);
+                    replaceForm.append("replace", "true");
+
+                    document.getElementById("uploadStatus").innerHTML = "Replacing...";
+                    document.getElementById("progressBar").style.width = "50%";
+                    document.getElementById("progressBar").innerHTML = "50%";
+
+                    const replaceResponse = await fetch("/upload-csv",{
+                        method:"POST",
+                        body:replaceForm
+                    });
+
+                    const replaceData = await replaceResponse.json();
+
+                    if(!replaceData.success){
+
+                        document.getElementById("progressBar").style.width = "0%";
+                        document.getElementById("progressBar").innerHTML = "0%";
+                        document.getElementById("uploadStatus").innerHTML = "Failed";
+
+                        document.getElementById("result").innerHTML =
+                        "<div class='alert alert-danger'>"+replaceData.message+"</div>";
+
+                        return;
+
+                    }
+
+                    document.getElementById("progressBar").style.width = "100%";
+                    document.getElementById("progressBar").innerHTML = "100%";
+                    document.getElementById("uploadStatus").innerHTML = "Completed";
+
+                    processResult(replaceData);
+
+                    return;
+
+                }
+
+                else{
+
+                    document.getElementById("result").innerHTML =
+                    "<div class='alert alert-warning'>Upload cancelled.</div>";
+
+                    return;
+
+                }
+
+            }
+
+            document.getElementById("result").innerHTML =
+            "<div class='alert alert-danger'>"+data.message+"</div>";
+
+            return;
+
+        }
+
+        // Upload successful
+        document.getElementById("progressBar").style.width = "100%";
+        document.getElementById("progressBar").innerHTML = "100%";
+        document.getElementById("uploadStatus").innerHTML = "Completed";
+
+        processResult(data);
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+        document.getElementById("progressBar").style.width = "0%";
+        document.getElementById("progressBar").innerHTML = "0%";
+        document.getElementById("uploadStatus").innerHTML = "Failed";
+
+        document.getElementById("result").innerHTML =
+        "<div class='alert alert-danger'>Server Error.</div>";
+
+    }
+
+});
+</script>
 {% endblock %}
