@@ -55,7 +55,6 @@ def dashboard_data():
 
         "normal": normal,
 
-        "accuracy": 98.7,
 
         "recent": recent_uploads
 
