@@ -55,60 +55,79 @@
                 </div>
             </div>
 
-            <div class="row g-4 mb-4">
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="stat-card card border-0 shadow-sm rounded-4 h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <p class="text-muted small mb-2">Total Records</p>
-                                    <h2 class="display-6 fw-bold mb-0" id="totalRecords">0</h2>
-                                </div>
-                                <div class="stat-icon text-primary">
-                                    <i class="bi bi-database-fill"></i>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Statistics Cards -->
+<div class="row g-4 mb-4">
+
+    <!-- Total Records -->
+    <div class="col-12 col-sm-6 col-xl-4">
+        <div class="stat-card card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+                        <p class="text-muted small mb-2">Total Records</p>
+                        <h2 class="display-6 fw-bold mb-0" id="totalRecords">0</h2>
                     </div>
-                </div>
-                <div class="col-12 col-sm-6 col-xl-3">
-    <div class="stat-card card border-0 shadow-sm rounded-4 h-100">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
 
-                <div>
-                    <p class="text-muted small mb-2">Threats Detected</p>
-                    <h2 class="display-6 fw-bold mb-0 text-danger" id="attackCount">0</h2>
-                </div>
+                    <div class="stat-icon text-primary">
+                        <i class="bi bi-database-fill"></i>
+                    </div>
 
-                <div class="stat-icon text-danger">
-                    <i class="bi bi-exclamation-triangle-fill"></i>
                 </div>
-
             </div>
         </div>
     </div>
-</div>
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="stat-card card border-0 shadow-sm rounded-4 h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <p class="text-muted small mb-2">Normal Traffic</p>
-                                    <h2 class="display-6 fw-bold mb-0 text-success" id="normalCount">0</h2>
-                                </div>
-                                <div class="stat-icon text-success">
-                                    <i class="bi bi-check-circle-fill"></i>
-                                </div>
-                            </div>
-                        </div>
+
+
+    <!-- Threats Detected -->
+    <div class="col-12 col-sm-6 col-xl-4">
+        <div class="stat-card card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+                        <p class="text-muted small mb-2">Threats Detected</p>
+                        <h2 class="display-6 fw-bold mb-0 text-danger"
+                            id="attackCount">0</h2>
                     </div>
-                </div>
-               
+
+                    <div class="stat-icon text-danger">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </div>
+
                 </div>
             </div>
+        </div>
+    </div>
 
-           <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4 mb-4">
+
+    <!-- Normal Traffic -->
+    <div class="col-12 col-sm-6 col-xl-4">
+        <div class="stat-card card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+                        <p class="text-muted small mb-2">Normal Traffic</p>
+                        <h2 class="display-6 fw-bold mb-0 text-success"
+                            id="normalCount">0</h2>
+                    </div>
+
+                    <div class="stat-icon text-success">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+               
+        
+            </div>
+
+          <div class="row g-4 mb-4">
                 <div class="col-12 col-xl-5">
                     <div class="card border-0 shadow-sm rounded-4 h-100">
                         <div class="card-body p-4">
