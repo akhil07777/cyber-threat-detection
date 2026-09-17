@@ -1,4 +1,4 @@
-cat > README.md <<'EOF'
+
 # AI-Based Cybersecurity Threat Detection Platform
 
 An AI-powered web application for detecting and analyzing potential cybersecurity threats in network-traffic data using Machine Learning.
@@ -194,40 +194,4 @@ The reports section allows users to:
 - GitHub
 - Render
 
-## 📂 Project Structure
 
-AI-Cybersecurity-Threat-Detection/
-│
-├── app.py
-├── requirements.txt
-│
-├── model/
-│   ├── model.pkl
-│   └── encoders.pkl
-│
-├── dataset/
-│   └── KDDTrain+.txt
-│
-├── templates/
-│   ├── login.html
-│   ├── register.html
-│   ├── dashboard.html
-│   ├── upload.html
-│   ├── reports.html
-│   └── ...
-│
-├── static/
-│   ├── css/
-│   ├── js/
-│   └── images/
-│
-└── README.md
-
-> The exact file and folder structure may vary depending on the project version.
-
-## ⚙️ Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/your-repository-name.git
